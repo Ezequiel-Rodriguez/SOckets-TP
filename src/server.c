@@ -19,6 +19,8 @@ int main(void){
    struct sockaddr_storage peer_addr;
    socklen_t addr_size;
 
+   char buff[256];
+
     /* int socket(int domain, int type, int protocol)
     *  creates  an  endpoint  for communication and returns a file descriptor that refers to that endpoint.
        The file descriptor returned by a successful call will be the lowest-numbered file  descriptor  not  currently
@@ -53,7 +55,7 @@ int main(void){
 
    if (bind(socketfd, (struct sockaddr *) &addr, sizeof(addr)) == -1){
       perror("Error in socket creation");
-      //perror("Error: socket creation")
+      //peror("Error:r socket creation")
       return -1;
    }
 
@@ -63,6 +65,7 @@ int main(void){
    }
 
    addr_size = sizeof(peer_addr);
+
    childfd = accept(socketfd, (struct sockaddr *) &peer_addr, &addr_size);
 
    if(childfd < 0){
@@ -71,9 +74,15 @@ int main(void){
    }
    close(socketfd);
 
-   /* Code to deal with incoming connection(s)... */
+   FILE * clientfd = fdopen(childfd, "r");
 
+   /* Code to deal with incoming connection(s)... */
+   while(fgets(buff, 256, clientfd) != NULL){
+      printf("%s", buff);
+      memset(buff, 0, 256);
+   }
    /* Game */
 
+   fclose(clientfd);
    close(childfd);
 }
