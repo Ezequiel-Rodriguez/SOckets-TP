@@ -6,6 +6,8 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <unistd.h>
+#include <stdlib.h>
+#include <time.h>
 
 #define PORT 8080
 #define BACKLOG 10
@@ -37,14 +39,13 @@ int main(void){
    socketfd = socket(AF_INET, SOCK_STREAM, 0);
     
    if(socketfd == -1){
-      printf("Error in socket creation");
-      //perror("Error: socket creation")
+      perror("Error in socket creation");
       return -1;
    }
 
    if (setsockopt(socketfd, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(yes)) == -1) {
-    perror("Error in socket setting");
-    return 1;
+      perror("Error in socket setting");
+      return 1;
    } 
 
    memset(&addr, 0, sizeof(struct sockaddr_in)); // clear structure
@@ -55,7 +56,6 @@ int main(void){
 
    if (bind(socketfd, (struct sockaddr *) &addr, sizeof(addr)) == -1){
       perror("Error in socket creation");
-      //peror("Error:r socket creation")
       return -1;
    }
 
@@ -72,6 +72,7 @@ int main(void){
       perror("Error while listening");
       return -1;
    }
+   
    close(socketfd);
 
    FILE * clientfd = fdopen(childfd, "r");
@@ -79,7 +80,8 @@ int main(void){
    /* Code to deal with incoming connection(s)... */
    while(fgets(buff, 256, clientfd) != NULL){
       printf("%s", buff);
-      memset(buff, 0, 256);
+      sleep(2);
+      system("clear");
    }
    /* Game */
 

@@ -34,9 +34,8 @@ int main(int argc, char * argv[]){
     addr.sin_family = AF_INET;
     addr.sin_port = htons(port);
 
-    if (inet_pton(AF_INET, argv[1], &addr.sin_addr) <= 0)
-    {
-        printf("Error while assigning adress");
+    if (inet_pton(AF_INET, argv[1], &addr.sin_addr) <= 0){
+        perror("Error while assigning adress");
         return -1;
     }
 
@@ -48,12 +47,13 @@ int main(int argc, char * argv[]){
 
     while(fgets(buff, MAX_BUFF_LENGTH, stdin) != NULL){
 
-        if(write(socketfd, buff, strlen(buff)) < 0){ //que flags uso en send?
+        if(write(socketfd, buff, strlen(buff)) < 0){ 
+
             perror("Error while writing through socket");
+            close(socketfd);
             return -1;
         }
     }
 
     close(socketfd);
-
 }
