@@ -1,21 +1,35 @@
 include ../Makefile.inc
 
-SOURCES := $(wildcard *.c)
+S_SOURCES := server.c challenges.c
+C_SOURCES := client.c
 
-U_TARGET := $(../user)
-S_TARGET := $(../server)
 
-OBJECTS := $(wildcard *.o)
-TARGETS := $(S_TARGET) $(U_TARGET)
+S_OBJECTS := server.o
+C_OBJECTS := client.o
+
+C_TARGET := ../client
+S_TARGET := ../server
+TARGETS := $(S_TARGET) $(C_TARGET)
 
 # TODO: build user and server independently
 
-all: $(OBJECTS)
-	$(GCC) $(GCCFLAGS) $< -o $(TARGETS)
-	@rm -rf $(OBJECTS)
+all:
+	make server;
+	make client;
 
-$(OBJECTS): $(SOURCES)
+server: $(S_OBJECTS)
+	$(GCC) $(GCCFLAGS) $< -o $(S_TARGET)
+	@rm -rf $(S_OBJECTS)
+
+$(S_OBJECTS): $(S_SOURCES)
 	$(GCC) $(GCCFLAGS) -I./include -c $< -o $@ $(GCCLINKFLAGS)
+
+client: $(C_OBJECTS)
+	$(GCC) $(GCCFLAGS) $< -o $(C_TARGET)
+	@rm -rf $(C_OBJECTS)
+
+$(C_OBJECTS): $(C_SOURCES)
+	$(GCC) $(GCCFLAGS) -c $< -o $@ $(GCCLINKFLAGS)
 
 clean:
 	@rm -rf $(TARGETS)
