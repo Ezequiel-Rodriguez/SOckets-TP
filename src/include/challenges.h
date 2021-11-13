@@ -4,6 +4,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <time.h>
+#include <unistd.h>
 
 typedef int (*PChallenge)(const char *ans, const char *investigation, const char *message,
                           FILE *stream);
@@ -61,6 +63,25 @@ static char buf[MAX_ANSWER_LENGTH] = {0};
 #define ANSWER10 "chin_chu_lan_cha\n"
 #define ANSWER11 "gdb_rules\n"
 #define ANSWER12 "normal\n"
+
+#define SECRET_W                                                               \
+  "................................La respuesta es fk3wfLCm3QvS\n"
+#define SECRET_W_SIZE 62
+#define SECRET_W_FD 420
+#define QUINE_MSG                                                               \
+  "¡Genial!, ya lograron meter un programa en quine.c, veamos si hace lo que " \
+  "corresponde."
+#define COMPILE_QUINE "gcc quine.c -o quine"
+#define ERROR_QUINE "ENTER para reintentar."
+#define RUN_QUINE "./quine | diff - quine.c"
+#define QUINE_SUCCESS "la respuesta es chin_chu_lan_cha"
+#define QUINE_FOUND_DIF "diff encontró diferencias."
+#define SECRET_PID 0x12345678
+#define GDB_ANSWER "La respuesta es: gdb_rules"
+#define ANS_7_LEN 64
+#define RANDOMNES 5
+#define MAX_CHARACTER '~'
+#define MIN_CHARACTER ' '
 
 int basicChallenge(const char *ans, const char *investigation, const char *message, FILE *stream);
 int quineChallenge(const char *ans, const char *investigation, const char *message, FILE *stream);
