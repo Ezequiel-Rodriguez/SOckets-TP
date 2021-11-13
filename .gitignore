@@ -91,9 +91,12 @@ bb.out
 bb.out.*
 
 
+### Docker ###
+.bash_history
+.config/
 
 ### VisualStudioCode ###
-.vscode/*
+.vscode/
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
