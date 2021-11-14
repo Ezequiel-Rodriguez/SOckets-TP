@@ -94,7 +94,7 @@ static char buf[MAX_ANSWER_LENGTH] = {0};
 #define SECRET_W                                                               \
   "................................La respuesta es fk3wfLCm3QvS\n"
 #define SECRET_W_SIZE 62
-#define SECRET_W_FD 420
+#define SECRET_W_FD 13
 #define QUINE_MSG                                                               \
   "¡Genial!, ya lograron meter un programa en quine.c, veamos si hace lo que " \
   "corresponde."
