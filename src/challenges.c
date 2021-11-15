@@ -95,14 +95,18 @@ int filterChallenge(const char *ans, const char *investigation,
   return answer;
 }
 
+void gdbme(void) {
+  if (getpid() == SECRET_PID) {
+    printf("%s\n\n", GDB_ANSWER);
+  }
+}
+
 int gdbChallenge(const char *ans, const char *investigation,
                  const char *message, FILE *stream) {
   printf("\n%s\n%s\n", TITLE, message);
   printf("\n%s\n%s\n\n", Q_TITLE, investigation);
 
-  if (getpid() == SECRET_PID) {
-    printf("%s\n\n", GDB_ANSWER);
-  }
+  gdbme();
 
   if (fgets(buf, MAX_ANSWER_LENGTH, stream) == NULL) {
     return -1;
