@@ -16,6 +16,8 @@
 *.ilk
 *.map
 *.exp
+server
+client
 
 # Precompiled Headers
 *.gch
