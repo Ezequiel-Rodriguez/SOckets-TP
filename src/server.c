@@ -10,9 +10,12 @@
 #include <sys/types.h>
 #include <time.h>
 #include <unistd.h>
+#include "challenges.h"
 
 #define PORT 8080
 #define BACKLOG 10
+
+static void startChallenges(int clientfd);
 
 int main(void) {
 
@@ -78,17 +81,54 @@ int main(void) {
 
   close(socketfd);
 
-  FILE *clientfd = fdopen(childfd, "r");
+  startChallenges(childfd);
 
   /* Code to deal with incoming connection(s)... */
-  while (fgets(buff, 256, clientfd) != NULL) {
+  /* while (fgets(buff, 256, clientfd) != NULL) {
     printf("%s", buff);
     sleep(2);
     system("clear");
-  }
+  } */
   /* Game */
 
-  fclose(clientfd);
   close(childfd);
   return 0;
+}
+
+static void startChallenges(int clientfd){
+
+    int answer = 0, level = 0;
+    FILE *clientFile = fdopen(clientfd, "r");
+    char *response = malloc(sizeof(char) * CAPACITY);
+
+    if (response == NULL){
+        fclose(clientFile);
+        return;
+    }
+
+    while (level < MAX_CHALLENGES && answer != -1)
+    {
+        Challenge challenge = challenges[level];
+                              
+        if ((answer = challenge.issue(challenge.ans, challenge.investigation, response, clientFile)) == 1)
+        {
+            level++;
+        }
+        else
+        {
+            sleep(2);
+            system("clear");
+        }
+    }
+
+    free(response);
+    fclose(clientFile);
+
+    if (answer == -1){
+        return;
+    }
+
+    printf("\033[1;1H\033[2J");
+
+    printf("Felicitaciones, finalizaron el juego. Ahora deberán implementar el servidor que se comporte como el servidor provisto\n\n");
 }

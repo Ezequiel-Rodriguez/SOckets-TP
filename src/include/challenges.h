@@ -18,6 +18,7 @@ typedef struct challenge {
 } Challenge;
 
 #define MAX_ANSWER_LENGTH 256
+#define CAPACITY 50
 
 static char buf[MAX_ANSWER_LENGTH] = {0};
 
