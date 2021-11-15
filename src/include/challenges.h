@@ -1,11 +1,15 @@
 #ifndef __CHALLENGES_H__
 #define __CHALLENGES_H__
 
+#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
 #include <unistd.h>
+#ifndef M_PI
+#define M_PI 3.14159265358979323846
+#endif
 
 typedef int (*PChallenge)(const char *ans, const char *investigation,
                           const char *message, FILE *stream);
@@ -68,15 +72,15 @@ static char buf[MAX_ANSWER_LENGTH] = {0};
 #define MESSAGE2 "The Wire S1E5\n5295 888 6288"
 #define MESSAGE3 "https://ibb.co/tc0Hb6w"
 #define MESSAGE4 "EBADF..."
-#define MESSAGE5 "respuesta = strings:245"
-#define MESSAGE6 ".data .bss .comment ? .shstrtab .symtab .strtab"
+#define MESSAGE5 "respuesta = strings:93"  // strings server | grep -n too_easy
+#define MESSAGE6 ".text .fini .rodata ? .eh_frame_hdr .eh_frame .preinit_array"  // readelf -S server
 #define MESSAGE7 "Filter error"
 #define MESSAGE8 "¿?\n\n\033[30;40mLa respuesta es BUmyYq5XxXGt\033[0m"
 #define MESSAGE9                                                               \
   "Latexme\n\nSi\n\\mathrm{d}y = "                                             \
   "u^v{\\cdot}(v'{\\cdot}\\ln{(u)}+v{\\cdot}\\frac{u'}{u})\nentonces\ny ="
-#define MESSAGE10 "quine."
-#define MESSAGE11 "b gdbme y encontrá el valor mágico ENTER para reintentar."
+#define MESSAGE10 "quine.\n"
+#define MESSAGE11 "b gdbme y encontrá el valor mágico\n\nENTER para reintentar."
 #define MESSAGE12 "Me conoces"
 
 #define ANSWER1 "entendido\n"
@@ -106,10 +110,11 @@ static char buf[MAX_ANSWER_LENGTH] = {0};
 #define QUINE_FOUND_DIF "diff encontró diferencias."
 #define SECRET_PID 0x12345678
 #define GDB_ANSWER "La respuesta es: gdb_rules"
-#define ANS_7_LEN 64
-#define RANDOMNES 5
+#define ANS_7_LEN 100
+#define RANDOMNES 10
 #define MAX_CHARACTER '~'
 #define MIN_CHARACTER ' '
+#define NORMALIZED_COUNT 300
 
 int basicChallenge(const char *ans, const char *investigation,
                    const char *message, FILE *stream);
@@ -135,7 +140,7 @@ static Challenge challenges[MAX_CHALLENGES] = {
     {ANSWER8, QUESTION8, MESSAGE8, basicChallenge},
     {ANSWER9, QUESTION9, MESSAGE9, basicChallenge},
     {ANSWER10, QUESTION10, MESSAGE10, quineChallenge},
-    {ANSWER11, QUESTION10, MESSAGE10, gdbChallenge},
-    {ANSWER12, QUESTION11, MESSAGE11, normalChallenge}};
+    {ANSWER11, QUESTION11, MESSAGE11, gdbChallenge},
+    {ANSWER12, QUESTION12, MESSAGE12, normalChallenge}};
 
 #endif

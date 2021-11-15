@@ -27,7 +27,7 @@ int main(int argc, char *argv[]) {
   socketfd = socket(AF_INET, SOCK_STREAM, 0);
 
   if (socketfd < 0) {
-    perror("Error in socket creation");
+    perror("socket");
     return -1;
   }
 
@@ -37,18 +37,18 @@ int main(int argc, char *argv[]) {
   addr.sin_port = htons(port);
 
   if (inet_pton(AF_INET, argv[1], &addr.sin_addr) <= 0) {
-    perror("Error while assigning adress");
+    perror("inet_pton");
     return -1;
   }
 
   if (connect(socketfd, (struct sockaddr *)&addr, sizeof(addr)) == -1) {
-    perror("Error while connecting to socket");
+    perror("connect");
     return -1;
   }
 
   while (fgets(buff, MAX_BUFF_LENGTH, stdin) != NULL) {
     if (write(socketfd, buff, strlen(buff)) < 0) {
-      perror("Error while writing through socket");
+      perror("write");
       close(socketfd);
       return -1;
     }

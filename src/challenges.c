@@ -2,6 +2,18 @@
 // PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
 #include <challenges.h>
 
+// https://rosettacode.org/wiki/Random_numbers#C
+
+static double drand() /* uniform distribution, (0..1] */
+{
+  return (rand() + 1.0) / (RAND_MAX + 1.0);
+}
+
+static double randNormDist() /* normal distribution, centered on 0, std dev 1 */
+{
+  return sqrt(-2 * log(drand())) * cos(2 * M_PI * drand());
+}
+
 int basicChallenge(const char *ans, const char *investigation,
                    const const char *message, FILE *stream) {
   printf("\n%s\n%s\n", TITLE, message);
@@ -11,7 +23,13 @@ int basicChallenge(const char *ans, const char *investigation,
     return -1;
   }
 
-  return !strcmp(ans, buf);
+  int answer = !strcmp(ans, buf);
+
+  if (answer == 0) {
+    printf("La respuesta incorrecta: %s\n", buf);
+  }
+
+  return answer;
 }
 
 int quineChallenge(const char *ans, const char *investigation,
@@ -34,7 +52,13 @@ int quineChallenge(const char *ans, const char *investigation,
   if (fgets(buf, MAX_ANSWER_LENGTH, stream) == NULL)
     return -1;
 
-  return !strcmp(ans, buf);
+  int answer = !strcmp(ans, buf);
+
+  if (answer == 0) {
+    printf("La respuesta incorrecta: %s\n", buf);
+  }
+
+  return answer;
 }
 
 int filterChallenge(const char *ans, const char *investigation,
@@ -43,13 +67,14 @@ int filterChallenge(const char *ans, const char *investigation,
 
   char aux[ANS_7_LEN] = "La respuesta es: ";
   strcat(aux, ans);
-  ans = aux;
+
+  int i = 0;
 
   srand(time(NULL));
 
-  while (ans) {
-    if (rand() % RANDOMNES) {
-      write(STDOUT_FILENO, ans++, 1);
+  while (aux[i]) {
+    if (rand() % RANDOMNES == 1) {
+      write(STDOUT_FILENO, aux + i++, 1);
     } else {
       char c = (rand() % (MAX_CHARACTER - MIN_CHARACTER)) + MIN_CHARACTER;
       write(STDERR_FILENO, &c, 1);
@@ -61,7 +86,13 @@ int filterChallenge(const char *ans, const char *investigation,
   if (fgets(buf, MAX_ANSWER_LENGTH, stream) == NULL)
     return -1;
 
-  return !strcmp(ans, buf);
+  int answer = !strcmp(ans, buf);
+
+  if (answer == 0) {
+    printf("La respuesta incorrecta: %s\n", buf);
+  }
+
+  return answer;
 }
 
 int gdbChallenge(const char *ans, const char *investigation,
@@ -77,35 +108,60 @@ int gdbChallenge(const char *ans, const char *investigation,
     return -1;
   }
 
-  return !strcmp(ans, buf);
+  int answer = !strcmp(ans, buf);
+
+  if (answer == 0) {
+    printf("La respuesta incorrecta: %s\n", buf);
+  }
+
+  return answer;
 }
 
 int writeChallenge(const char *ans, const char *investigation,
                    const char *message, FILE *stream) {
-  printf("\n%s\n%s\n", TITLE, message);
-  printf("\n%s\n%s\n\n", Q_TITLE, investigation);
-
+  printf("\n%s\n%s\n\n", TITLE, message);
   if (write(SECRET_W_FD, SECRET_W, SECRET_W_SIZE) == -1) {
-    return -1;
+    perror("write");
   }
+  printf("\n%s\n%s\n\n", Q_TITLE, investigation);
 
   if (fgets(buf, MAX_ANSWER_LENGTH, stream) == NULL) {
     return -1;
   }
 
-  return !strcmp(ans, buf);
+  int answer = !strcmp(ans, buf);
+
+  if (answer == 0) {
+    printf("La respuesta incorrecta: %s\n", buf);
+  }
+
+  return answer;
 }
 
 int normalChallenge(const char *ans, const char *investigation,
                     const char *message, FILE *stream) {
   printf("\n%s\n%s\n", TITLE, message);
-  printf("\n%s\n%s\n\n", Q_TITLE, investigation);
 
-  // TODO: Print normal dist.
+  int i = 0;
+
+  srand(time(NULL));
+
+  while (i < NORMALIZED_COUNT) {
+    printf("%.6f ", randNormDist());
+    i++;
+  }
+
+  printf("\n%s\n%s\n\n", Q_TITLE, investigation);
 
   if (fgets(buf, MAX_ANSWER_LENGTH, stream) == NULL) {
     return -1;
   }
 
-  return !strcmp(ans, buf);
+  int answer = !strcmp(ans, buf);
+
+  if (answer == 0) {
+    printf("La respuesta incorrecta: %s\n", buf);
+  }
+
+  return answer;
 }
