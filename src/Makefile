@@ -3,8 +3,7 @@ include ../Makefile.inc
 S_SOURCES := server.c challenges.c
 C_SOURCES := client.c
 
-
-S_OBJECTS := server.o
+S_OBJECTS := server.o challenges.o
 C_OBJECTS := client.o
 
 C_TARGET := ../client
