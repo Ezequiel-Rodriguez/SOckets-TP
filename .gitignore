@@ -74,6 +74,8 @@ orphaned-proofs.prf
 *.dmp
 # Ignore PVS log files
 *.log
+strace_out
+report.tasks
 
 ### Valgrind ###
 # Callgrind output files

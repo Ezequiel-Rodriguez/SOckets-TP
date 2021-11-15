@@ -7,7 +7,7 @@ all:
 
 clean:
 	cd src; make clean;
-	@rm -f *.tasks strace_out;
+	@rm -f *.tasks strace_out PVS-Studio.log;
 
 pvs-studio-test:
 	pvs-studio-analyzer trace -- make all
