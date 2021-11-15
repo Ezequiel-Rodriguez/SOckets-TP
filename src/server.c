@@ -10,7 +10,7 @@
 #include <sys/types.h>
 #include <time.h>
 #include <unistd.h>
-#include "challenges.h"
+#include <challenges.h>
 
 #define PORT 8080
 #define BACKLOG 10
