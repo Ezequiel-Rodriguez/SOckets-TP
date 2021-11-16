@@ -32,4 +32,4 @@ Note that pvs-studio and cpp-check do need to be installed.
 
 ## Easter Eggs
 
-The group could only find the one that appears when using the comand `strings`. There a cow can be seen saying "Esto es un Easter egg".
+The group could only find the one that appears when using the comand `strings` with the server executable file as a parameter. It shows a list of the strings declared in the file, and also a cow saying "Esto es un Easter egg".
