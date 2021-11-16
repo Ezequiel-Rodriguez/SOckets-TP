@@ -29,3 +29,7 @@ The user can run the implemented static tests by using the following commands:
 ```make cpp-check-test```
 
 Note that pvs-studio and cpp-check do need to be installed. 
+
+## Easter Eggs
+
+The group could only find the one that appears when using the comand `strings`. There a cow can be seen saying "Esto es un Easter egg".
